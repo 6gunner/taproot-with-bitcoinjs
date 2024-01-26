@@ -58,7 +58,7 @@ export async function getTxHex(txid: string) {
     const fetchTxData = async () => {
       try {
         const response: AxiosResponse<string> = await blockstream.get(`/tx/${txid}/hex`);
-        console.log(`getTxHex response = `, response)
+        // console.log(`getTxHex response = `, response)
         const data: string = response.data ? response.data : undefined;
         if (data) {
           resolve(data);
