@@ -6,7 +6,7 @@ import {
   Psbt
 } from "bitcoinjs-lib";
 import { broadcast, waitUntilUTXO } from "../blockstream_utils";
-import { witnessStackToScriptWitness } from '../witness_stack_to_script_witness';
+import { witnessStackToScriptWitness } from '../utils';
 
 const network = networks.testnet
 
