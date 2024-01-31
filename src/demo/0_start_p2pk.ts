@@ -73,3 +73,46 @@ export async function startP2PK(keyPair: ECPairInterface) {
   let txid = await broadcast(txHex);
   console.log(`Success! Txid is ${txid}`);
 }
+
+/**
+ * 返回公钥上的钱
+ * @param keyPair 
+ */
+export async function returnP2PK(keyPair: ECPairInterface) {
+
+  const psbt = new Psbt({ network });
+
+  const utx = {
+    txid: "a83f151c80c244090e51a14edf2a5656a92844608d4b19c89b9843a3a5e98cf6",
+    vout: 0,
+    value: 1000
+  }
+  console.log(`utx = `, utx);
+  const utxHex = await getTxHex(utx.txid);
+  const nonWitnessUtxo = Buffer.from(utxHex, 'hex');
+  psbt.addInput({
+    hash: utx.txid,
+    index: utx.vout,
+    nonWitnessUtxo,
+  });
+  // 添加输出 - 往这个地址转账
+  psbt.addOutputs([{
+    address: "2N5hXpAhwXA2SU6MCXnp3BdkkWLZezg1Gv3",
+    value: utx.value - 350,
+  },
+  ]);
+  console.log(`psbt.toBase64=`, psbt.toBase64());
+  psbt.signInput(0, keyPair);
+
+  // 验证签名是否正确
+  // psbt.validateSignaturesOfInput(0, validator);
+  psbt.finalizeAllInputs();
+  console.log(`psbt.finalizeAllInputs.toBase64=`, psbt.toBase64());
+
+  // 构造最终交易并转化为十六进制表示
+  const txHex = psbt.extractTransaction().toHex();
+  console.log(txHex);
+
+  let txid = await broadcast(txHex);
+  console.log(`Success! Txid is ${txid}`);
+}

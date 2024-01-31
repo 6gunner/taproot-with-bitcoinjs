@@ -6,7 +6,7 @@ import { ECPairFactory, ECPairAPI } from 'ecpair';
 import * as tinysecp from 'tiny-secp256k1';
 import networks from "./networks";
 
-import { startP2PK } from './demo/0_start_p2pk';
+import { startP2PK, returnP2PK } from './demo/0_start_p2pk';
 import { startP2PKH } from './demo/1_start_p2pkh';
 import { startP2WPKH } from './demo/3_start_p2wpkh';
 import { startP2wsh } from './demo/startP2wsh';
@@ -33,7 +33,8 @@ async function start() {
   console.log("publicK = " + keypair.publicKey?.toString('hex'));
   console.log("\r\n");
 
-  await startP2PK(keypair);
+  // await startP2PK(keypair);
+  await returnP2PK(keypair);
   // await startP2PKH(keypair);
   // await startP2WPKH(keypair);
   // await startP2sh(keypair);
