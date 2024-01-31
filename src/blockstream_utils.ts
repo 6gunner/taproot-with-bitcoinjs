@@ -12,7 +12,7 @@ export async function waitUntilUTXO(address: string) {
       try {
         const response: AxiosResponse<string> = await blockstream.get(`/address/${address}/utxo`);
         const data: IUTXO[] = response.data ? JSON.parse(response.data) : undefined;
-        console.log(data);
+        // console.log(`utxos = `, data);
         if (data.length > 0) {
           resolve(data);
           clearInterval(intervalId);

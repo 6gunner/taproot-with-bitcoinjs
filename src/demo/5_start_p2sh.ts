@@ -11,7 +11,9 @@ import { ECPairInterface, ECPairFactory, ECPairAPI } from 'ecpair';
 const network = networks.testnet
 
 /**
- * 最简单版本的p2sh
+ * 最简单版本的p2sh 
+ * 
+ * 但这不是一个标准的交易，很容易被别人破解。
  * @returns 
  * 
  */
@@ -48,7 +50,7 @@ export async function startP2sh(keyPair: ECPairInterface) {
     hash: utx.txid,
     index: utx.vout,
     redeemScript: p2shPayment.redeem.output,
-    nonWitnessUtxo: Buffer.from(txHex, 'hex'),
+    nonWitnessUtxo: Buffer.from(txHex, 'hex'), // 因为是p2sh的地址，要传这个nonWitnessUtxo，虽然用不到
     finalScriptSig: script.compile([
       ...unlockingData,
       p2shPayment.redeem.output,

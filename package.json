@@ -23,6 +23,7 @@
   },
   "scripts": {
     "build": "tsc --noEmitOnError",
-    "dev": "node --trace-deprecation --no-warnings --loader ts-node/esm"
+    "dev": "node --trace-deprecation --no-warnings --loader ts-node/esm",
+    "debug": "node --inspect-brk --trace-deprecation --no-warnings --loader ts-node/esm"
   }
 }
